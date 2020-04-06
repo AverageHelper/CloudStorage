@@ -36,9 +36,16 @@ public protocol FileUploader: Publisher where Failure == UploadError, Output == 
 }
 
 public struct UploadProgress {
+    
+    public init(completedBytes: Int, totalBytes: Int) {
+        self.completedBytes = completedBytes
+        self.totalBytes = totalBytes
+    }
+    
     public var completedBytes: Int
     public var totalBytes: Int
     public var fractionCompleted: Double { Double(completedBytes) / Double(totalBytes) }
+    
 }
 
 /// A type that conforms to this protocol may be used by objects that conform to the `FileUploader` protocol.

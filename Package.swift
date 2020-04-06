@@ -7,17 +7,22 @@ let package = Package(
     products: [
         .library(
             name: "CloudStorage",
-            targets: ["CloudStorage"]),
+            targets: ["CloudStorage"]
+        ),
     ],
     dependencies: [
-        // .package(url: /* Firebase */, from: "1.0.0"),
+        // .package(url: /* url */, from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "CloudStorage",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "CloudStorageTests",
-            dependencies: ["CloudStorage"]),
+            dependencies: [
+                "CloudStorage",
+            ]
+        ),
     ]
 )

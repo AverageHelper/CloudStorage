@@ -52,12 +52,21 @@ public protocol FileDeleter: Publisher where Output == Never, Failure == Downloa
 }
 
 public struct DownloadProgress {
+    
+    public init(completedBytes: Int, totalBytes: Int? = nil) {
+        self.completedBytes = completedBytes
+        self.totalBytes = totalBytes
+    }
+    
     public var completedBytes: Int
+    
     public var totalBytes: Int?
+    
     public var fractionCompleted: Double? {
         guard let total = totalBytes else { return nil }
         return Double(completedBytes) / Double(total)
     }
+    
 }
 
 /// A type that conforms to this protocol may be used by objects that conform to the `FileDownloader` protocol.
