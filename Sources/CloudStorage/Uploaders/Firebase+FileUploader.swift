@@ -5,7 +5,7 @@
 //  Created by James Robinson on 2/7/20.
 //
 
-#if canImport(Combine) && canImport(CryptoKit) && canImport(FirebaseStorage)
+#if canImport(Combine) && canImport(CryptoKit) && canImport(Firebase)
 import Foundation
 import Combine
 import CryptoKit
@@ -191,7 +191,7 @@ public protocol FirebaseUploadable: Uploadable where Metadata: FirebaseDownloada
 
 extension FirebaseUploadable {
     
-    typealias ReferenceType = Metadata.ReferenceType
+    public typealias ReferenceType = Metadata.ReferenceType
     
     /// Returns a storage reference for the file if the user is signed in. `nil` otherwise.
     ///

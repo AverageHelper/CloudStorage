@@ -335,7 +335,7 @@ public protocol CloudKitUploadable: Uploadable where Metadata: CloudKitDownloada
 
 @available(watchOS 3.0, *)
 extension CloudKitUploadable {
-    typealias ContainerType = Metadata.ContainerType
+    public typealias ContainerType = Metadata.ContainerType
     public var recordID: CKRecord.ID { metadata.recordID }
 }
 

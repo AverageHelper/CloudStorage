@@ -5,7 +5,7 @@
 //  Created by James Robinson on 2/6/20.
 //
 
-#if canImport(Combine) && canImport(CryptoKit) && canImport(FirebaseStorage)
+#if canImport(Combine) && canImport(CryptoKit) && canImport(Firebase)
 import Foundation
 import Combine
 import CryptoKit
