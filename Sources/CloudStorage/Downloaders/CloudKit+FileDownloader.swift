@@ -414,6 +414,7 @@ public final class CloudKitDeletionSubscription<SubscriberType, ContainerType>: 
 
 /// A type that conforms to this protocol may be used by `CloudKitFileDownloader`s
 /// to retrieve data from CloudKit.
+@available(watchOS 3.0, *)
 public protocol CloudKitDownloadable: Downloadable {
     /// The type of CloudKit container to use.  Use `CKContainer` for normal CloudKit capabilities.
     associatedtype ContainerType: CloudKitContainer
@@ -430,6 +431,7 @@ extension String {
 
 // MARK: Fetch Operation
 
+@available(watchOS 3.0, *)
 public protocol CloudKitFetchRecordsOperation: CloudKitOperation {
     
     init(recordIDs: [CKRecord.ID])
@@ -440,5 +442,6 @@ public protocol CloudKitFetchRecordsOperation: CloudKitOperation {
     
 }
 
+@available(watchOS 3.0, *)
 extension CKFetchRecordsOperation: CloudKitFetchRecordsOperation {}
 #endif

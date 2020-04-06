@@ -1,3 +1,3 @@
 # CloudStorage
 
-A description of this package.
+Some Combine hooks for interacting with cloud storage services.
