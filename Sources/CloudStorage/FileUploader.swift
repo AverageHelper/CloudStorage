@@ -5,17 +5,22 @@
 //  Created by James Robinson on 2/7/20.
 //
 
-#if canImport(Combine) && canImport(CryptoKit)
 import Foundation
+#if canImport(Combine)
 import Combine
+#endif
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 
+#if canImport(Combine)
 /// A publisher which defines a method for uploading a file referenced by a given `Uploadable` value.
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol FileUploader: Publisher where Failure == UploadError, Output == UploadProgress {
     
     associatedtype UploadableType: Uploadable
     
+    #if canImport(CryptoKit)
     /// Prepares to upload data from a `fileObject` to an external service.
     ///
     /// - Parameters:
@@ -32,8 +37,10 @@ public protocol FileUploader: Publisher where Failure == UploadError, Output == 
     ///   with relevant data for retrieval.
     static func uploadFile(_ file: UploadableType,
                            encryptingWithKey encryptionKey: SymmetricKey?) throws -> Self
+    #endif
     
 }
+#endif
 
 public struct UploadProgress {
     
@@ -59,12 +66,14 @@ extension Uploadable {
     public var id: UUID { self.metadata.id }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public enum UploadError: Swift.Error {
     /// The upload was cancelled.
     case cancelled
+    #if canImport(CryptoKit)
     /// An error occurred while encrypting the payload for transport.
+    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     case encryption(CryptoKitError)
+    #endif
     /// There is no data to upload.
     case noData
     /// The network is temporarily unavailable.
@@ -85,4 +94,3 @@ public enum UploadError: Swift.Error {
     /// specific service's error codes, you may need to handle that error specially.
     case unknown
 }
-#endif

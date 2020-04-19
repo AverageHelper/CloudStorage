@@ -5,11 +5,15 @@
 //  Created by James Robinson on 2/5/20.
 //
 
-#if canImport(Combine) && canImport(CryptoKit)
 import Foundation
+#if canImport(Combine)
 import Combine
+#endif
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 
+#if canImport(Combine)
 /// A publisher which defines a method for downloading a file referenced by a given `Downloadable`.
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol FileDownloader: Publisher
@@ -19,6 +23,7 @@ public protocol FileDownloader: Publisher
     associatedtype DownloadableType: Downloadable
     associatedtype DeleterType: FileDeleter
     
+    #if canImport(CryptoKit)
     /// Prepares to download data for a `Downloadable` from an external service.
     ///
     /// - Parameters:
@@ -34,6 +39,7 @@ public protocol FileDownloader: Publisher
     static func downloadFile(_ file: DownloadableType,
                              to outputDirectory: URL,
                              decryptingUsing decryptionKey: SymmetricKey?) throws -> Self
+    #endif
     
     /// Prepares to delete a file from an external service.
     ///
@@ -50,6 +56,7 @@ public protocol FileDownloader: Publisher
 public protocol FileDeleter: Publisher where Output == Never, Failure == DownloadError {
     associatedtype Deletable: Downloadable
 }
+#endif
 
 public struct DownloadProgress {
     
@@ -87,12 +94,14 @@ extension Downloadable {
     
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public enum DownloadError: Swift.Error {
     /// The download was cancelled.
     case cancelled
+    #if canImport(CryptoKit)
     /// An error occurred while decrypting downloaded data.
+    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     case decryption(CryptoKitError)
+    #endif
     /// An error occurred during a disk operation.
     case disk(CocoaError)
     /// The requested item was not found on the server.
@@ -114,13 +123,14 @@ public enum DownloadError: Swift.Error {
     case unknown
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension DownloadError: CustomStringConvertible {
     
     public var description: String {
         switch self {
         case .cancelled: return "Cancelled"
+        #if canImport(CryptoKit)
         case .decryption(let error): return error.localizedDescription
+        #endif
         case .development(let reason): return reason
         case .disk(let error): return error.localizedDescription
         case .itemNotFound: return "Item not found"
@@ -134,4 +144,3 @@ extension DownloadError: CustomStringConvertible {
     }
     
 }
-#endif
