@@ -77,6 +77,7 @@ public struct DownloadProgress {
 }
 
 /// A type that conforms to this protocol may be used by objects that conform to the `FileDownloader` protocol.
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol Downloadable: Identifiable where ID == UUID {
     associatedtype PayloadType: Uploadable
     var recordIdentifier: UUID { get }
@@ -86,6 +87,7 @@ public protocol Downloadable: Identifiable where ID == UUID {
     var storage: PayloadType? { get set }
 }
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Downloadable {
     
     public var localData: Data? {
