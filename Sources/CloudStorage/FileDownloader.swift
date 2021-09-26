@@ -15,7 +15,6 @@ import CryptoKit
 
 #if canImport(Combine)
 /// A publisher which defines a method for downloading a file referenced by a given `Downloadable`.
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol FileDownloader: Publisher
     where Output == DownloadProgress,
     Failure == DownloadError {
@@ -52,7 +51,6 @@ public protocol FileDownloader: Publisher
 }
 
 /// A publisher which completes successfully at the end of a successful deletion operation.
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol FileDeleter: Publisher where Output == Never, Failure == DownloadError {
     associatedtype Deletable: Downloadable
 }
@@ -77,7 +75,6 @@ public struct DownloadProgress {
 }
 
 /// A type that conforms to this protocol may be used by objects that conform to the `FileDownloader` protocol.
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol Downloadable: Identifiable where ID == UUID {
     associatedtype PayloadType: Uploadable
     var recordIdentifier: UUID { get }
@@ -87,7 +84,6 @@ public protocol Downloadable: Identifiable where ID == UUID {
     var storage: PayloadType? { get set }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Downloadable {
     
     public var localData: Data? {
@@ -101,7 +97,6 @@ public enum DownloadError: Swift.Error {
     case cancelled
     #if canImport(CryptoKit)
     /// An error occurred while decrypting downloaded data.
-    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     case decryption(CryptoKitError)
     #endif
     /// An error occurred during a disk operation.

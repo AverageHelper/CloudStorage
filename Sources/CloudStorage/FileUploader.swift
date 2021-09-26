@@ -15,7 +15,6 @@ import CryptoKit
 
 #if canImport(Combine)
 /// A publisher which defines a method for uploading a file referenced by a given `Uploadable` value.
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol FileUploader: Publisher where Failure == UploadError, Output == UploadProgress {
     
     associatedtype UploadableType: Uploadable
@@ -56,14 +55,12 @@ public struct UploadProgress {
 }
 
 /// A type that conforms to this protocol may be used by objects that conform to the `FileUploader` protocol.
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol Uploadable {
     associatedtype Metadata: Downloadable
     var metadata: Metadata { get }
     var payload: Data? { get }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Uploadable {
     public var id: UUID { self.metadata.id }
 }
@@ -73,7 +70,6 @@ public enum UploadError: Swift.Error {
     case cancelled
     #if canImport(CryptoKit)
     /// An error occurred while encrypting the payload for transport.
-    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     case encryption(CryptoKitError)
     #endif
     /// There is no data to upload.
